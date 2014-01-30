@@ -45,6 +45,20 @@ var app = {
       };
   },
 
+  loadImage : function(url) {
+    this.img.src = url;
+    this.img.onload = function() {
+        app.ctx.canvas.width = this.width;
+        app.ctx.canvas.height = this.height + (app.lineHeight * 3.5);
+        app.textY = this.height + app.lineHeight;
+        app.ctx.drawImage(app.img, 0, 0);
+      //  url.revokeObjectURL(src);
+    };
+    this.img.onerror = function() {
+      console.log("Couldn't load image from URL");
+    }
+  },
+
   addTextToCanvas : function(text) {
     this.ctx.fillStyle = "white";
     this.ctx.fillRect(0, this.img.height, this.img.width, this.lineHeight * 3.5);
@@ -65,11 +79,18 @@ var app = {
 };
 
 $("#uploadimage").on("change", function(){
+  
   if (this.files[0]){
+    $("#imageURL").val("");
     app.drawImage(this.files[0]);
   } else {
     app.wipeCanvas();
   }
+});
+
+$("#imageURL").on("change", function(){
+  $("#clearUpload").click();
+  app.loadImage(this.value);
 });
 
 $("#caption").on("keyup", function(){
