@@ -1,67 +1,81 @@
-var textY = 0;
-var lineHeight = 28;
-var img = new Image();
-var ctx = document.getElementById('canvas').getContext('2d');
-
-function wrapText(text, x, y, lineHeight) {
+var app = {
   
-  ctx.font = '18pt Arial';
+  textY : 0,
+  lineHeight : 28,
+  img : new Image(),
+  ctx : document.getElementById('canvas').getContext('2d'),
+
+  wrapText : function (text, x, y, lineHeight) {
+    
+    this.ctx.font = '18pt Arial';
+    
+    var maxWidth = this.ctx.canvas.width *0.9;
+    var words = text.split(' ');
+    var line = '';
+
+    for(var n = 0; n < words.length; n++) {
+      var testLine = line + words[n] + ' ';
+      var metrics = this.ctx.measureText(testLine);
+      var testWidth = metrics.width;
+      if (testWidth > maxWidth && n > 0) {
+        this.ctx.textAlign = 'center';
+        this.ctx.fillText(line, x, y);
+        line = words[n] + ' ';
+        y += this.lineHeight;
+      }
+      else {
+        line = testLine;
+      }
+    }
+    this.ctx.textAlign = 'center';
+        this.ctx.fillText(line, x, y);
+  },
   
-  var maxWidth = ctx.canvas.width *0.9;
-  var words = text.split(' ');
-  var line = '';
+  drawImage : function(file) {
+      var url = window.URL || window.webkitURL,
+          src = url.createObjectURL(file);
 
-  for(var n = 0; n < words.length; n++) {
-    var testLine = line + words[n] + ' ';
-    var metrics = ctx.measureText(testLine);
-    var testWidth = metrics.width;
-    if (testWidth > maxWidth && n > 0) {
-      ctx.textAlign = 'center';
-      ctx.fillText(line, x, y);
-      line = words[n] + ' ';
-      y += lineHeight;
+      this.img.src = src;
+      this.img.onload = function() {
+          app.ctx.canvas.width = this.width;
+          app.ctx.canvas.height = this.height + (app.lineHeight * 3.5);
+          app.textY = this.height + app.lineHeight;
+          app.ctx.drawImage(app.img, 0, 0);
+          url.revokeObjectURL(src);
+      };
+  },
 
-    }
-    else {
-      line = testLine;
-    }
+  addTextToCanvas : function(text) {
+    this.ctx.fillStyle = "white";
+    this.ctx.fillRect(0, this.img.height, this.img.width, this.lineHeight * 3.5);
+    this.ctx.fillStyle = "black";
+    this.wrapText(text, this.img.width / 2, this.textY, this.lineHeight);
+  },
+
+  canvasToPNG : function() {
+    bertString = document.getElementById("canvas").toDataURL("image/png");
+    $("#canvas").hide();
+    $("#bertStrip").attr("src",bertString).show();
+    $("#download-text").show();
+  },
+
+  wipeCanvas : function() {
+    this.ctx.canvas.width = this.ctx.canvas.width;
   }
-  ctx.textAlign = 'center';
-      ctx.fillText(line, x, y);
-}
-
-function draw(f) {
-    var url = window.URL || window.webkitURL,
-        src = url.createObjectURL(f);
-
-    img.src = src;
-    img.onload = function() {
-        ctx.canvas.width = this.width;
-        ctx.canvas.height = this.height + (lineHeight * 3.5);
-        textY = this.height + lineHeight;
-        ctx.drawImage(img, 0, 0);
-        url.revokeObjectURL(src);
-    };
-}
+};
 
 $("#uploadimage").on("change", function(){
   if (this.files[0]){
-    draw(this.files[0]);
+    app.drawImage(this.files[0]);
   } else {
-    ctx.canvas.width = ctx.canvas.width
+    app.wipeCanvas();
   }
 });
 
 $("#caption").on("keyup", function(){
-  ctx.fillStyle = "white";
-  ctx.fillRect(0, img.height, img.width, lineHeight * 3.5);
-  ctx.fillStyle = "black";
-  wrapText(this.value, img.width / 2, textY, lineHeight);
+  app.addTextToCanvas(this.value);
 });
 
 $("#download").on("click", function(){
-  bertString = document.getElementById("canvas").toDataURL("image/png");
-  $("#canvas").hide();
-  $("#bertStrip").attr("src",bertString).show();
-  $("#download-text").show();
+  app.canvasToPNG();
 });
