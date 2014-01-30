@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jasny-bootstrap/3.0.1-p7/css/bootstrap.min.css">
+<title>JS Bin</title>
+  <style>
+    .item{height:120px}
+
+    #bertStrip, #download-text{display:none}
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <div class="panel panel-default">
+      <div class="panel-heading clearfix">
+        <h3 class="pull-left">Bertstrip Generator</h3>
+        <img src="logo.png" class="pull-right">
+      </div>
+      <div class="panel-body">
+        <div id="carousel-example-generic" class="carousel slide" data-ride="carousel" data-interval="false">
+          <div class="carousel-inner">
+          <div class="item active">
+            <div class="form-group col-md-4 col-md-offset-4" class="active">
+              <h4><label for="uploadimage">Step 1:</label></h4>
+
+              <div class="fileinput fileinput-new" data-provides="fileinput">
+                <span class="btn btn-default btn-file">
+                  <span class="fileinput-new">Select Image</span>
+                  <span class="fileinput-exists">Change</span>
+                  <input type="file" id="uploadimage" name="uploadimage">
+                </span>
+                <span class="fileinput-filename"></span>
+                <a href="#" class="close fileinput-exists" data-dismiss="fileinput" style="float: none">&times;</a>
+              </div>
+            </div>
+          </div>
+            <div class="item">
+              <h4><label for="uploadimage">Enter caption:</label></h4>
+              <input type="text" id="caption" name="caption" class="form-control" />
+            </div>
+            <div class="item text-center">
+              <a id="download" class="btn btn-labeled btn-primary btn-lg" role="button">Convert to PNG
+                <span class="btn-label btn-label-right">
+                  <i class="glyphicon glyphicon-picture"></i>
+                </span>
+
+              </a>
+              <h4 id="download-text">Right click on the image below and choose 'Save As'</h4>
+            </div>
+          </div>
+        </div>
+        <br>
+        <p class="text-right">
+          <a id="next" role="button" class="btn btn-labeled btn-primary btn-lg" href="#carousel-example-generic" data-slide="next">Next
+            <span class="btn-label btn-label-right">
+              <i class="glyphicon glyphicon-arrow-right"></i>
+            </span>
+          </a>
+        </p>
+      </div>
+      <div  class="text-center">
+        <canvas id="canvas" width="500" height="500"></canvas>
+        <img id="bertStrip" />
+      </div>
+    </div>
+
+    </div>
+
+
+  <script src="//code.jquery.com/jquery-2.0.3.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jasny-bootstrap/3.0.1-p7/js/bootstrap.min.js"></script>
+  <script src="js/bertstripper.js"></script>
+</body>
+</html>
