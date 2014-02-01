@@ -7,7 +7,7 @@ var app = {
 
   /**
    * Draw text to a canvas, wrapping as necessary.
-   * 
+   * Modified from http://www.html5canvastutorials.com/tutorials/html5-canvas-wrap-text-tutorial/
    * @param  string text
    *   The text to be drawn.
    * @param  int x
