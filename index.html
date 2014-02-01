@@ -1,20 +1,28 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jasny-bootstrap/3.0.1-p7/css/bootstrap.min.css">
-<link rel="stylesheet" href="css/custom.css">
-<title>Bertstripper</title>
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jasny-bootstrap/3.0.1-p7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/custom.css">
+  <title>Bertstripper</title>
   <script>
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  (function(i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function() {
+      (i[r].q = i[r].q || []).push(arguments)
+    }, i[r].l = 1 * new Date();
+    a = s.createElement(o),
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+  })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
 
-    ga('create', 'UA-47610471-1', 'mrdth.github.io');
-    ga('send', 'pageview');
-
+  ga('create', 'UA-47610471-1', 'mrdth.github.io');
+  ga('send', 'pageview');
   </script>
 </head>
+
 <body>
   <div class="container">
 
@@ -25,67 +33,74 @@
       </div>
       <div class="panel-body">
 
-      <ul class="nav nav-tabs">
-        <li class="active"><a href="#step-1" data-toggle="tab">1. Load an image</a></li>
-        <li><a href="#step-2" data-toggle="tab">2. Add your caption</a></li>
-        <li><a href="#step-3" data-toggle="tab">3. Post to Reddit</a></li>
-      </ul>
+        <ul class="nav nav-tabs">
+          <li class="active"><a href="#step-1" data-toggle="tab">1. Load an image</a>
+          </li>
+          <li><a href="#step-2" data-toggle="tab">2. Add your caption</a>
+          </li>
+          <li><a href="#step-3" data-toggle="tab">3. Post to Reddit</a>
+          </li>
+        </ul>
 
+        <div class="tab-content">
 
-<div class="tab-content">
+          <div class="tab-pane active text-center" id="step-1">
+            <!--<h4><label for="uploadimage">Step 1:</label></h4>-->
 
-            <div class="tab-pane active text-center" id="step-1">
-              <!--<h4><label for="uploadimage">Step 1:</label></h4>-->
+            <div class="fileinput fileinput-new" data-provides="fileinput">
+              <span class="btn btn-primary btn-file">
+                <span class="fileinput-new">Select Image</span>
+                <span class="fileinput-exists">Change</span>
+                <input type="file" id="uploadimage" name="uploadimage" accept="image/*">
+              </span>
+              <span class="fileinput-filename"></span>
+              <a href="#" class="close fileinput-exists" id="clearUpload" data-dismiss="fileinput" style="float: none">&times;</a>
+            </div>
+            <br>OR:
+            <br>
+            <br>
 
-              <div class="fileinput fileinput-new" data-provides="fileinput">
-                <span class="btn btn-primary btn-file">
-                  <span class="fileinput-new">Select Image</span>
-                  <span class="fileinput-exists">Change</span>
-                  <input type="file" id="uploadimage" name="uploadimage" accept="image/*">
-                </span>
-                <span class="fileinput-filename"></span>
-                <a href="#" class="close fileinput-exists" id="clearUpload" data-dismiss="fileinput" style="float: none">&times;</a>
+            <form class="form-inline" role="form">
+              <div class="form-group">
+                <input type="text" class="form-control" id="imageURL" placeholder="Enter image URL">
               </div>
-              <br>OR:<br><br>
-
-
-              <form class="form-inline" role="form">
-                <div class="form-group">
-                  <input type="text" class="form-control" id="imageURL" placeholder="Enter image URL">
-                </div>
-                  <button id="fetchURL" class="btn btn-primary">Load</button>
-                  <br><br>
-                  <p>(See <a href="http://muppet.wikia.com/wiki/Ernie_and_Bert_Sketches">
+              <button id="fetchURL" class="btn btn-primary">Load</button>
+              <br>
+              <br>
+              <p>(See <a href="http://muppet.wikia.com/wiki/Ernie_and_Bert_Sketches">
                   http://muppet.wikia.com/wiki/Ernie_and_Bert_Sketches</a> for a good source of images.</p>
-                  <span class="bg-danger" id="error"></span>
-              </form>
-            </div>
-          
-            <div class="tab-pane" id="step-2">
-              <h4><label for="uploadimage">Enter caption:</label></h4>
-              <input type="text" id="caption" name="caption" class="form-control" />
-            </div>
-            <div class="tab-pane text-center" id="step-3">
-              <a id="download" class="btn btn-labeled btn-primary btn-lg" role="button">Convert to PNG
+              <span class="bg-danger" id="error"></span>
+            </form>
+          </div>
+
+          <div class="tab-pane" id="step-2">
+            <h4>
+              <label for="uploadimage">Enter caption:</label>
+            </h4>
+            <input type="text" id="caption" name="caption" class="form-control" />
+          </div>
+          <div class="tab-pane text-center" id="step-3">
+            <a id="download" class="btn btn-labeled btn-primary btn-lg" role="button">Convert to PNG
                 <span class="btn-label btn-label-right">
                   <i class="glyphicon glyphicon-picture"></i>
                 </span>
 
               </a>
-              <h4 id="download-text">Right click on the image below and choose 'Save As'</h4>
-            </div>
-</div>
+            <h4 id="download-text">Right click on the image below and choose 'Save As'</h4>
+          </div>
+        </div>
       </div>
-      <div  class="text-center">
+      <div class="text-center">
         <canvas id="canvas" width="500" height="500"></canvas>
         <img id="bertStrip" />
       </div>
     </div>
 
-    </div>
+  </div>
 
   <script src="//code.jquery.com/jquery-2.0.3.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/jasny-bootstrap/3.0.1-p7/js/bootstrap.min.js"></script>
   <script src="js/bertstripper.js"></script>
 </body>
+
 </html>
