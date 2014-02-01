@@ -49,8 +49,11 @@ body {
 .tab-content{height:150px}
 
 #error {
-  margin-top:15px;
-  
+  margin-top:15px;  
+}
+
+.loading {
+  background: url(../img/loading.gif) center center no-repeat;
 }
 
 .bg-danger {

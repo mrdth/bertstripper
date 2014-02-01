@@ -48,13 +48,14 @@ var app = {
   loadImage : function(url) {
     this.img.src = url;
     this.img.onload = function() {
-        app.ctx.canvas.width = this.width;
-        app.ctx.canvas.height = this.height + (app.lineHeight * 3.5);
-        app.textY = this.height + app.lineHeight;
-        app.ctx.drawImage(app.img, 0, 0);
-      //  url.revokeObjectURL(src);
+      $("#canvas").removeClass("loading");
+      app.ctx.canvas.width = this.width;
+      app.ctx.canvas.height = this.height + (app.lineHeight * 3.5);
+      app.textY = this.height + app.lineHeight;
+      app.ctx.drawImage(app.img, 0, 0);
     };
     this.img.onerror = function() {
+      $("#canvas").removeClass("loading");
       app.wipeCanvas();
       $("#imageURL").addClass("bg-danger");
     };
@@ -72,6 +73,7 @@ var app = {
     $("#canvas").hide();
     $("#bertStrip").attr("src",bertString).show();
     $("#download-text").show();
+    return bertString;
   },
 
   wipeCanvas : function() {
@@ -93,7 +95,7 @@ $("#fetchURL").on("click", function(ev){
   ev.preventDefault();
   $("#clearUpload").click();
   app.wipeCanvas();
-  app.loadImage("img/loading.gif");
+  $("#canvas").addClass("loading");
   app.loadImage($("#imageURL").val());
 });
 
