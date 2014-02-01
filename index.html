@@ -21,17 +21,17 @@
     <div class="panel panel-default">
       <div class="panel-heading clearfix">
         <h2 class="pull-left">Bertstrip Generator</h2>
-        <img src="logo.png" class="pull-right">
+        <img src="img/logo.png" class="pull-right">
       </div>
       <div class="panel-body">
         <div id="carousel-example-generic" class="carousel slide" data-ride="carousel" data-interval="false">
           <div class="carousel-inner">
           <div class="item active">
-            <div class="form-group col-md-4 col-md-offset-4" class="active">
-              <h4><label for="uploadimage">Step 1:</label></h4>
+            <div class="text-center" class="active">
+              <!--<h4><label for="uploadimage">Step 1:</label></h4>-->
 
               <div class="fileinput fileinput-new" data-provides="fileinput">
-                <span class="btn btn-default btn-file">
+                <span class="btn btn-primary btn-file">
                   <span class="fileinput-new">Select Image</span>
                   <span class="fileinput-exists">Change</span>
                   <input type="file" id="uploadimage" name="uploadimage" accept="image/*">
@@ -39,8 +39,17 @@
                 <span class="fileinput-filename"></span>
                 <a href="#" class="close fileinput-exists" id="clearUpload" data-dismiss="fileinput" style="float: none">&times;</a>
               </div>
-              &nbsp;OR:
-              <input type="text" class="form-control" id="imageURL" placeholder="Paste image URL">
+              <br>OR:<br><br>
+
+
+              <form class="form-inline" role="form">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="imageURL" placeholder="Enter image URL">
+                </div>
+                  <button id="fetchURL" class="btn btn-primary">Load</button>
+                  <br><br>
+                  <span class="bg-danger" id="error"></span>
+              </form>
             </div>
           </div>
             <div class="item">

@@ -55,8 +55,9 @@ var app = {
       //  url.revokeObjectURL(src);
     };
     this.img.onerror = function() {
-      console.log("Couldn't load image from URL");
-    }
+      app.wipeCanvas();
+      $("#imageURL").addClass("bg-danger");
+    };
   },
 
   addTextToCanvas : function(text) {
@@ -88,9 +89,16 @@ $("#uploadimage").on("change", function(){
   }
 });
 
-$("#imageURL").on("change", function(){
+$("#fetchURL").on("click", function(ev){
+  ev.preventDefault();
   $("#clearUpload").click();
-  app.loadImage(this.value);
+  app.wipeCanvas();
+  app.loadImage("img/loading.gif");
+  app.loadImage($("#imageURL").val());
+});
+
+$("#imageURL").on('focus', function(){
+  $(this).removeClass("bg-danger");
 });
 
 $("#caption").on("keyup", function(){
