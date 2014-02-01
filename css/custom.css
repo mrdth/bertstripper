@@ -43,8 +43,10 @@ body {
   margin: 30px 0;
 }
 
-
-.item{height:175px}
+.nav-tabs {
+  margin-bottom: 15px;
+}
+.tab-content{height:150px}
 
 #error {
   margin-top:15px;
