@@ -71,7 +71,7 @@ var app = {
    *   URL of an image to fetch.
    */
   loadImage: function(url) {
-    this.img.src = url;
+    this.img.src = 'proxy.php?url=' + url;
 
     this.img.onload = function() {
       $("#canvas").removeClass("loading");
@@ -193,6 +193,28 @@ $("#fetchURL").on("click", function(ev) {
   app.wipeCanvas();
   $("#canvas").addClass("loading");
   app.loadImage($("#imageURL").val());
+
+// $.ajax({
+//   url: 'proxy.php',
+//   type: 'GET',
+
+//   data: {
+//     url: $("#imageURL").val(),
+//     mimeType: 'image/jpg',
+//     // mode: 'native',
+//   },
+// })
+// .done(function(response) {
+//   app.loadImage(response);
+// })
+// .fail(function() {
+//   console.log("error");
+// })
+// .always(function() {
+//   console.log("complete");
+// });
+
+
 });
 
 $("#imageURL").on('focus', function() {
