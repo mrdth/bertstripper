@@ -112,10 +112,10 @@ var app = {
    */
   canvasToPNG: function() {
     bertString = document.getElementById("canvas").toDataURL("image/png");
-    $("#canvas").hide();
-    $("#bertStrip").attr("src", bertString).show();
-    $("#download-text").show();
-    return bertString;
+    // $("#canvas").hide();
+    // $("#bertStrip").attr("src", bertString).show();
+    
+    return bertString.replace(/^data:image\/(png|jpg);base64,/, "");
   },
 
   /**
@@ -138,7 +138,27 @@ var app = {
    *   
    */
   postToImgur: function(img, title) {
-
+    
+    $.ajax({
+      url: 'https://api.imgur.com/3/image',
+      type: 'POST',
+      headers: {
+        Authorization: 'Client-ID ' + app.imgurClientID,
+      },
+      data: {
+        image: img,
+        // type: 'base64',
+        title: title,
+      },
+    })
+    .done(function(result) {
+      console.log(result);
+      app.redirectToReddit(result.data.link, title);
+    })
+    .fail(function() {
+      $("#info-text").text("Error uploading to Imgur").addClass("bg-danger");
+    });
+    
   },
 
   /**
@@ -184,5 +204,9 @@ $("#caption").on("keyup", function() {
 });
 
 $("#download").on("click", function() {
-  app.canvasToPNG();
+  $("#info-text").text("Uploading to Imgur").show();
+  var bertString = app.canvasToPNG();
+  var title = $("#title").val();
+  // bertString = document.getElementById("canvas").toDataURL("image/png");
+  app.postToImgur(bertString, title);
 });

@@ -56,6 +56,7 @@
               <span class="fileinput-filename"></span>
               <a href="#" class="close fileinput-exists" id="clearUpload" data-dismiss="fileinput" style="float: none">&times;</a>
             </div>
+            <!--
             <br>OR:
             <br>
             <br>
@@ -71,22 +72,29 @@
                   http://muppet.wikia.com/wiki/Ernie_and_Bert_Sketches</a> for a good source of images.</p>
               <span class="bg-danger" id="error"></span>
             </form>
+            -->
           </div>
 
           <div class="tab-pane" id="step-2">
             <h4>
-              <label for="uploadimage">Enter caption:</label>
+              <label for="caption">Enter caption:</label>
             </h4>
             <input type="text" id="caption" name="caption" class="form-control" />
           </div>
-          <div class="tab-pane text-center" id="step-3">
-            <a id="download" class="btn btn-labeled btn-primary btn-lg" role="button">Convert to PNG
+          <div class="tab-pane" id="step-3">
+          <h4>
+            <label for="caption">Post title:</label>
+          </h4>
+          <input type="text" id="title" name="title" class="form-control" />
+          <br>
+          <br>
+            <a id="download" class="btn btn-labeled btn-primary btn-lg" role="button">Submit to Reddit
                 <span class="btn-label btn-label-right">
-                  <i class="glyphicon glyphicon-picture"></i>
+                  <i class="glyphicon glyphicon-cloud-upload"></i>
                 </span>
 
               </a>
-            <h4 id="download-text">Right click on the image below and choose 'Save As'</h4>
+            <h4 id="info-text"></h4>
           </div>
               
           <div class="text-center">

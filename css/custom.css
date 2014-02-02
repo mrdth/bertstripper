@@ -71,7 +71,7 @@ body {
   display: none;
 }
 
-#bertStrip, #download-text{display:none}
+#bertStrip, #info-text{display:none}
 
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {
