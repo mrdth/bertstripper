@@ -1,8 +1,9 @@
 var app = {
   imgurClientID: "872500c7b1ffd33",
   textY: 0,
-  lineHeight: 28,
+  lineHeight: 27,
   img: new Image(),
+  fontSize: 18,
   ctx: document.getElementById('canvas').getContext('2d'),
 
   /**
@@ -19,7 +20,7 @@ var app = {
    */
   wrapText: function(text, x, y, lineHeight) {
 
-    this.ctx.font = '18pt Arial';
+    this.ctx.font = app.fontSize + 'pt Arial';
 
     var maxWidth = this.ctx.canvas.width * 0.9;
     var words = text.split(' ');
@@ -76,7 +77,7 @@ var app = {
     this.img.onload = function() {
       $("#canvas").removeClass("loading");
       app.ctx.canvas.width = this.width;
-      app.ctx.canvas.height = this.height + (app.lineHeight * 3.5);
+      app.ctx.canvas.height = this.height + (app.lineHeight * 4);
       app.textY = this.height + app.lineHeight;
       app.ctx.drawImage(app.img, 0, 0);
     };
@@ -97,7 +98,7 @@ var app = {
   addTextToCanvas: function(text) {
     // Add blank the bottom area of the canvas, to overwrite any previoud text.
     this.ctx.fillStyle = "white";
-    this.ctx.fillRect(0, this.img.height, this.img.width, this.lineHeight * 3.5);
+    this.ctx.fillRect(0, this.img.height, this.img.width, app.ctx.canvas.height - this.img.height);
 
     // Draw the new text string to the canvas.
     this.ctx.fillStyle = "black";
@@ -193,28 +194,6 @@ $("#fetchURL").on("click", function(ev) {
   app.wipeCanvas();
   $("#canvas").addClass("loading");
   app.loadImage($("#imageURL").val());
-
-// $.ajax({
-//   url: 'proxy.php',
-//   type: 'GET',
-
-//   data: {
-//     url: $("#imageURL").val(),
-//     mimeType: 'image/jpg',
-//     // mode: 'native',
-//   },
-// })
-// .done(function(response) {
-//   app.loadImage(response);
-// })
-// .fail(function() {
-//   console.log("error");
-// })
-// .always(function() {
-//   console.log("complete");
-// });
-
-
 });
 
 $("#imageURL").on('focus', function() {
@@ -223,6 +202,16 @@ $("#imageURL").on('focus', function() {
 
 $("#caption").on("keyup", function() {
   app.addTextToCanvas(this.value);
+});
+
+$(".font-size").on('click', function(ev){
+  var increment = 1;
+  if($(this).hasClass("decrease")) {
+    increment = -1;
+  }
+  app.fontSize += increment;
+  app.lineHeight = app.fontSize * 1.5;
+  app.addTextToCanvas($("#caption").val());
 });
 
 $("#download").on("click", function() {
