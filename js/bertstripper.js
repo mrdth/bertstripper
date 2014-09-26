@@ -5,6 +5,7 @@ var app = {
   img: new Image(),
   fontSize: 18,
   ctx: document.getElementById('canvas').getContext('2d'),
+  lines: 0,
 
   /**
    * Draw text to a canvas, wrapping as necessary.
@@ -22,10 +23,11 @@ var app = {
 
     this.ctx.font = app.fontSize + 'pt Arial';
 
-    var maxWidth = this.ctx.canvas.width * 0.9;
+    var maxWidth = this.ctx.canvas.width * 0.99;
     var words = text.split(' ');
     var line = '';
-
+	this.lines = 1;
+	
     for (var n = 0; n < words.length; n++) {
       var testLine = line + words[n] + ' ';
       var metrics = this.ctx.measureText(testLine);
@@ -36,13 +38,22 @@ var app = {
         this.ctx.fillText(line, x, y);
         line = words[n] + ' ';
         y += this.lineHeight;
+        
+        this.lines += 1;
       } else {
         line = testLine;
       }
     }
-
+	
     this.ctx.textAlign = 'center';
     this.ctx.fillText(line, x, y);
+    
+    var height = this.img.height + (this.lineHeight * (this.lines + 1));
+    if (this.ctx.canvas.height != height) {
+      this.ctx.canvas.height = height;
+      this.ctx.drawImage(this.img, 0, 0);
+      this.addTextToCanvas(text, x, y, lineHeight);
+    }
   },
 
   /**
@@ -58,7 +69,7 @@ var app = {
     this.img.src = src;
     this.img.onload = function() {
       app.ctx.canvas.width = this.width;
-      app.ctx.canvas.height = this.height + (app.lineHeight * 3.5);
+      app.ctx.canvas.height = this.height + (app.lineHeight * 4);
       app.textY = this.height + app.lineHeight;
       app.ctx.drawImage(app.img, 0, 0);
       url.revokeObjectURL(src);
@@ -77,7 +88,7 @@ var app = {
     this.img.onload = function() {
       $("#canvas").removeClass("loading");
       app.ctx.canvas.width = this.width;
-      app.ctx.canvas.height = this.height + (app.lineHeight * 4);
+      app.ctx.canvas.height = this.height + (app.lineHeight * app.lines);
       app.textY = this.height + app.lineHeight;
       app.ctx.drawImage(app.img, 0, 0);
     };
@@ -179,7 +190,6 @@ var app = {
 
 
 $("#uploadimage").on("change", function() {
-
   if (this.files[0]) {
     $("#imageURL").val("");
     app.drawImage(this.files[0]);
